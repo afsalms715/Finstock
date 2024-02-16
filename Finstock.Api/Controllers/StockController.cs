@@ -1,6 +1,7 @@
 ﻿using Finstock.Api.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Finstock.Api.Mappers;
 
 namespace Finstock.Api.Controllers
 {
@@ -17,7 +18,7 @@ namespace Finstock.Api.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var stocks = context.Stocks.ToList();
+            var stocks = context.Stocks.ToList().Select(s=>s.ToStockDto());
             return Ok(stocks);
         }
         [HttpGet("{id:int}")]
@@ -28,7 +29,8 @@ namespace Finstock.Api.Controllers
             {
                 return NotFound();
             }
-            return Ok(stock);
+            
+            return Ok(stock.ToStockDto());
         }
     }
 }
