@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Finstock.Api.Mappers;
+using Finstock.Api.DTOs.Stock;
 
 namespace Finstock.Api.Controllers
 {
@@ -22,7 +23,7 @@ namespace Finstock.Api.Controllers
             return Ok(stocks);
         }
         [HttpGet("{id:int}")]
-        public IActionResult Get(int id)
+        public IActionResult GetById(int id)
         {
             var stock = context.Stocks.Find(id);
             if(stock == null)
@@ -31,6 +32,14 @@ namespace Finstock.Api.Controllers
             }
             
             return Ok(stock.ToStockDto());
+        }
+        [HttpPost]
+        public IActionResult CreateStock(CreateStockDto createStockDto)
+        {
+            var stock = createStockDto.ToStockFromCreateStock();
+            context.Stocks.Add(stock);
+            context.SaveChanges();
+            return CreatedAtAction(nameof(GetById),new {id=stock.Id},stock.ToStockDto());
         }
     }
 }
