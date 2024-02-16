@@ -54,5 +54,23 @@ namespace Finstock.Api.Controllers
             context.SaveChanges();
             return CreatedAtAction(nameof(GetById),new {id=stock.Id},stock.ToStockDto());
         }
+
+        [HttpPut("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult UpdateStock([FromRoute] int id, [FromBody] UpdateStockDto stockDto) {
+            var stock = context.Stocks.Find(id);
+            if(stock == null)
+            {
+                return NotFound(ModelState);
+            }
+            stock.Symbol = stockDto.Symbol;
+            stock.MarketCap = stockDto.MarketCap;
+            stock.Purchase = stockDto.Purchase;
+            stock.LastDiv=stockDto.LastDiv;
+            stock.Industry = stockDto.Industry;
+            context.SaveChanges();
+            return Ok(stock);
+        }
     }
 }
