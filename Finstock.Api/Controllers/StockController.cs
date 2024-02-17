@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Finstock.Api.Mappers;
 using Finstock.Api.DTOs.Stock;
+using System.Net.WebSockets;
 
 namespace Finstock.Api.Controllers
 {
@@ -71,6 +72,21 @@ namespace Finstock.Api.Controllers
             stock.Industry = stockDto.Industry;
             context.SaveChanges();
             return Ok(stock);
+        }
+
+        [HttpDelete("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public IActionResult DeleteStock([FromRoute] int id)
+        {
+            var stock = context.Stocks.Find(id);
+            if(stock == null)
+            {
+                return NotFound();
+            }
+            context.Stocks.Remove(stock);
+            context.SaveChanges();
+            return NoContent();
         }
     }
 }
