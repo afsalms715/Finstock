@@ -5,6 +5,7 @@ using Finstock.Api.Mappers;
 using Finstock.Api.DTOs.Stock;
 using System.Net.WebSockets;
 using Microsoft.EntityFrameworkCore;
+using Finstock.Api.Interfaces;
 
 namespace Finstock.Api.Controllers
 {
@@ -13,16 +14,18 @@ namespace Finstock.Api.Controllers
     public class StockController : ControllerBase
     {
         private readonly ApplicationDbContext context;
-        public StockController(ApplicationDbContext context)
+        private readonly IStockRepository stockRepo;
+        public StockController(ApplicationDbContext context,IStockRepository stockRepo)
         {
             this.context = context;
+            this.stockRepo = stockRepo;
         }
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Get()
         {
-            var stocks = await context.Stocks.ToListAsync();
+            var stocks = await stockRepo.GetAllStocksAsync();
             var stockDtos=stocks.Select(s => s.ToStockDto());
             return Ok(stockDtos);
         }

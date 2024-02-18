@@ -1,4 +1,6 @@
 using Finstock.Api.Data;
+using Finstock.Api.Interfaces;
+using Finstock.Api.Repository;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +15,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(option =>
 {
     option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
+builder.Services.AddScoped<IStockRepository, StockRepository>();//DI stock
 
 var app = builder.Build();
 
