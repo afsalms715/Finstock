@@ -35,8 +35,8 @@ namespace Finstock.Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetById(int id)
         {
-            var stock = await context.Stocks.FindAsync(id);
-            if(stock == null)
+            var stock = await stockRepo.GetStockByIdAsync(id);
+            if (stock == null)
             {
                 return NotFound();
             }
@@ -49,15 +49,14 @@ namespace Finstock.Api.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> CreateStock(CreateStockDto createStockDto)
         {
-            var IsDuplicate=await context.Stocks.FirstOrDefaultAsync(u=>u.Symbol==createStockDto.Symbol);
-            if(IsDuplicate != null)
+            var IsDuplicate = await stockRepo.DuplicateSymbol(createStockDto.Symbol);
+            if(IsDuplicate)
             {
                 ModelState.AddModelError("Duplicate Data", "this Symbol is already exist");
                 return BadRequest(ModelState);
             }
             var stock = createStockDto.ToStockFromCreateStock();
-            await context.Stocks.AddAsync(stock);
-            await context.SaveChangesAsync();
+            await stockRepo.CreateStokcAsync(stock);
             return CreatedAtAction(nameof(GetById),new {id=stock.Id},stock.ToStockDto());
         }
 
@@ -65,17 +64,11 @@ namespace Finstock.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> UpdateStock([FromRoute] int id, [FromBody] UpdateStockDto stockDto) {
-            var stock =await context.Stocks.FindAsync(id);
+            var stock =await stockRepo.UpdateStockAsync(id,stockDto);
             if(stock == null)
             {
                 return NotFound(ModelState);
             }
-            stock.Symbol = stockDto.Symbol;
-            stock.MarketCap = stockDto.MarketCap;
-            stock.Purchase = stockDto.Purchase;
-            stock.LastDiv=stockDto.LastDiv;
-            stock.Industry = stockDto.Industry;
-            await context.SaveChangesAsync();
             return Ok(stock.ToStockDto());
         }
 
