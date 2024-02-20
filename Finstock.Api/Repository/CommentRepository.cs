@@ -17,5 +17,11 @@ namespace Finstock.Api.Repository
             var comments = await context.Comments.ToListAsync();
             return comments;
         }
+
+        public async Task<Comment?> GetById(int id)
+        {
+            var commnet= await context.Comments.FindAsync(id);
+            return commnet;
+        }
     }
 }
