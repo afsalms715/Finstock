@@ -6,5 +6,6 @@ namespace Finstock.Api.Interfaces
     {
         Task<List<Comment>> GetAll();
         Task<Comment?> GetById(int id);
+        Task<Comment> CreateComment(Comment comment);
     }
 }

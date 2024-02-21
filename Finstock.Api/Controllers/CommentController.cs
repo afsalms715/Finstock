@@ -18,18 +18,29 @@ namespace Finstock.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<List<CommentDto>> GetAll()
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAll()
         {
             var comments=await commentRepo.GetAll();
             var commentDtos = comments.Select(C => C.ToCommentDto());
-            return commentDtos.ToList();
+            return Ok(commentDtos.ToList());
         }
 
         [HttpGet("{id:int}")]
-        public async Task<CommentDto> GetById([FromRoute] int id)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetById([FromRoute] int id)
         {
             var comment=await commentRepo.GetById(id);
-            return comment.ToCommentDto();
+            return Ok(comment.ToCommentDto());
+        }
+
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        public async Task<IActionResult> CreateComment(CreateCommentDto createCommentDto)
+        {
+            var comment = createCommentDto.FromCreateCommentDtoToComment();
+            await commentRepo.CreateComment(comment);
+            return CreatedAtAction(nameof(GetById), new {id=comment.Id},comment.ToCommentDto());
         }
     }
 }

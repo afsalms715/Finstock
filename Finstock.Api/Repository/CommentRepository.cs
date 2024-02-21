@@ -12,6 +12,14 @@ namespace Finstock.Api.Repository
         {
             this.context = context;
         }
+
+        public  async Task<Comment> CreateComment(Comment comment)
+        {
+            await context.Comments.AddAsync(comment);
+            context.SaveChanges();
+            return comment;
+        }
+
         public async Task<List<Comment>> GetAll()
         {
             var comments = await context.Comments.ToListAsync();
