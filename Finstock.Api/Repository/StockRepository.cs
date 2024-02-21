@@ -1,5 +1,6 @@
 ﻿using Finstock.Api.Data;
 using Finstock.Api.DTOs.Stock;
+using Finstock.Api.Helper;
 using Finstock.Api.Interfaces;
 using Finstock.Api.Models;
 using Microsoft.EntityFrameworkCore;
@@ -27,9 +28,22 @@ namespace Finstock.Api.Repository
             return stock;
         }
 
-        public async Task<List<Stock>> GetAllStocksAsync()
+        public async Task<List<Stock>> GetAllStocksAsync(QueryObjectStock query)
         {
-            return await _context.Stocks.Include(c=>c.Comments).ToListAsync();
+            var stocks = _context.Stocks.Include(c => c.Comments).AsQueryable();
+            if (!string.IsNullOrWhiteSpace(query.Symbol))
+            {
+                stocks=stocks.Where(stock => stock.Symbol.Contains(query.Symbol));
+            }
+            if (!string.IsNullOrWhiteSpace(query.ComponyName))
+            {
+                stocks=stocks.Where(stock=>stock.ComponyName.Contains(query.ComponyName));
+            }
+            if (!string.IsNullOrWhiteSpace(query.Industry))
+            {
+                stocks=stocks.Where(stock=>stock.ComponyName.Contains(query.Industry));
+            }
+            return await stocks.ToListAsync();
         }
 
         public async Task<Stock?> GetStockByIdAsync(int id)

@@ -6,6 +6,7 @@ using Finstock.Api.DTOs.Stock;
 using System.Net.WebSockets;
 using Microsoft.EntityFrameworkCore;
 using Finstock.Api.Interfaces;
+using Finstock.Api.Helper;
 
 namespace Finstock.Api.Controllers
 {
@@ -23,9 +24,9 @@ namespace Finstock.Api.Controllers
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get([FromQuery] QueryObjectStock query)
         {
-            var stocks = await stockRepo.GetAllStocksAsync();
+            var stocks = await stockRepo.GetAllStocksAsync(query);
             var stockDtos=stocks.Select(s => s.ToStockDto());
             return Ok(stockDtos);
         }
