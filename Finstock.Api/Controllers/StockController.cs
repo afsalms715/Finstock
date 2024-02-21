@@ -49,6 +49,8 @@ namespace Finstock.Api.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> CreateStock(CreateStockDto createStockDto)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
             var IsDuplicate = await stockRepo.DuplicateSymbol(createStockDto.Symbol);
             if(IsDuplicate)
             {
@@ -64,6 +66,8 @@ namespace Finstock.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> UpdateStock([FromRoute] int id, [FromBody] UpdateStockDto stockDto) {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
             var stock =await stockRepo.UpdateStockAsync(id,stockDto);
             if(stock == null)
             {

@@ -41,6 +41,8 @@ namespace Finstock.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateComment([FromRoute] int StockId,CreateCommentDto createCommentDto)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
             if(!await stockRepo.IsStockExist(StockId))
             {
                 return BadRequest("Stock Not Exisit");
@@ -64,6 +66,8 @@ namespace Finstock.Api.Controllers
         [HttpPut("{id:int}")]
         public async Task<IActionResult> UpdateComment([FromRoute] int id,UpdateCommentDto updateCommentDto)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
             var comment = updateCommentDto.UpdateCommentDtoToComment();
             var updatedComment=await commentRepo.UpdateComment(id,comment);
             if(updatedComment == null)
