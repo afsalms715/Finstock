@@ -10,7 +10,8 @@ namespace Finstock.Api.Interfaces
         Task<Stock> CreateStokcAsync(Stock stock);
         Task<Stock?> UpdateStockAsync(int id,UpdateStockDto stockDto);
         Task<Stock> DeleteStockByIdAsync(int id);      
-        Task<Boolean> DuplicateSymbol(string symbol);   
+        Task<Boolean> DuplicateSymbol(string symbol);
+        Task<Boolean> IsStockExist(int StockId);
         //listing all 
     }
 }

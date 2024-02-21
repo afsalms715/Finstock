@@ -7,5 +7,7 @@ namespace Finstock.Api.Interfaces
         Task<List<Comment>> GetAll();
         Task<Comment?> GetById(int id);
         Task<Comment> CreateComment(Comment comment);
+        Task<Comment?> DeleteComment(int id);
+        Task<Comment?> UpdateComment(int id,Comment comment);
     }
 }

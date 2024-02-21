@@ -20,6 +20,17 @@ namespace Finstock.Api.Repository
             return comment;
         }
 
+        public async Task<Comment?> DeleteComment(int id)
+        {
+            var comment = await context.Comments.FirstOrDefaultAsync(u => u.Id == id);
+            if (comment!=null)
+            {
+                context.Comments.Remove(comment);
+                await context.SaveChangesAsync();
+            }
+            return comment;
+        }
+
         public async Task<List<Comment>> GetAll()
         {
             var comments = await context.Comments.ToListAsync();
@@ -30,6 +41,19 @@ namespace Finstock.Api.Repository
         {
             var commnet= await context.Comments.FindAsync(id);
             return commnet;
+        }
+
+        public async Task<Comment?> UpdateComment(int id,Comment updatedComment)
+        {
+            var comment = await context.Comments.FirstOrDefaultAsync(u => u.Id == id);
+            if (comment != null)
+            {
+                comment.Title = updatedComment.Title;
+                comment.Content = updatedComment.Content;
+                comment.UpdatedOn = DateTime.Now;
+                await context.SaveChangesAsync();
+            }
+            return comment;
         }
     }
 }

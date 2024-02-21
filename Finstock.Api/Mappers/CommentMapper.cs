@@ -13,18 +13,26 @@ namespace Finstock.Api.Mappers
                 Title = comment.Title,
                 Content = comment.Content,
                 CreatedOn = comment.CreatedOn,
+                UpdatedOn= comment.UpdatedOn,
                 StockId = comment.StockId,
             };
         }
 
-        public static Comment FromCreateCommentDtoToComment(this CreateCommentDto commentDto)
+        public static Comment FromCreateCommentDtoToComment(this CreateCommentDto commentDto,int StockId)
         {
             return new Comment()
             {
                 Title = commentDto.Title,
                 Content = commentDto.Content,
-                CreatedOn = commentDto.CreatedOn,
-                StockId = commentDto.StockId,
+                StockId = StockId,
+            };
+        }
+
+        public static Comment UpdateCommentDtoToComment(this UpdateCommentDto commentDto) {
+            return new Comment()
+            {
+                Title = commentDto.Title,
+                Content = commentDto.Content,
             };
         }
     }

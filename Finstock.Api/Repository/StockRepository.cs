@@ -63,5 +63,10 @@ namespace Finstock.Api.Repository
             }
             return false;
         }
+
+        public async Task<bool> IsStockExist(int StockId)
+        {
+            return await _context.Stocks.AnyAsync(s=>s.Id==StockId);//checking any data like 
+        }
     }
 }

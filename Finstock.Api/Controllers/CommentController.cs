@@ -12,9 +12,11 @@ namespace Finstock.Api.Controllers
     public class CommentController : ControllerBase
     {
         private readonly ICommentRepository commentRepo;
-        public CommentController(ICommentRepository CommentRepo)
+        private readonly IStockRepository stockRepo;
+        public CommentController(ICommentRepository CommentRepo,IStockRepository stockRepo)
         {
             this.commentRepo = CommentRepo;
+            this.stockRepo = stockRepo;
         }
 
         [HttpGet]
@@ -34,13 +36,42 @@ namespace Finstock.Api.Controllers
             return Ok(comment.ToCommentDto());
         }
 
-        [HttpPost]
+        [HttpPost("{StockId:int}")]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<IActionResult> CreateComment(CreateCommentDto createCommentDto)
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> CreateComment([FromRoute] int StockId,CreateCommentDto createCommentDto)
         {
-            var comment = createCommentDto.FromCreateCommentDtoToComment();
+            if(!await stockRepo.IsStockExist(StockId))
+            {
+                return BadRequest("Stock Not Exisit");
+            }
+            var comment = createCommentDto.FromCreateCommentDtoToComment(StockId);
             await commentRepo.CreateComment(comment);
             return CreatedAtAction(nameof(GetById), new {id=comment.Id},comment.ToCommentDto());
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> DeleteComment([FromRoute] int id)
+        {
+            var comment = await commentRepo.DeleteComment(id);
+            if(comment == null) 
+            {
+                return NotFound();
+            }
+            return Ok(comment.ToCommentDto());
+        }
+
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> UpdateComment([FromRoute] int id,UpdateCommentDto updateCommentDto)
+        {
+            var comment = updateCommentDto.UpdateCommentDtoToComment();
+            var updatedComment=await commentRepo.UpdateComment(id,comment);
+            if(updatedComment == null)
+            {
+                return NotFound();
+            }
+            return Ok(updatedComment.ToCommentDto());
+
         }
     }
 }
