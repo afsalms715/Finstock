@@ -43,6 +43,33 @@ namespace Finstock.Api.Repository
             {
                 stocks=stocks.Where(stock=>stock.ComponyName.Contains(query.Industry));
             }
+            if (!string.IsNullOrWhiteSpace(query.OrderBy))
+            {
+                if (query.OrderBy == "Symbol")
+                {
+                    stocks = query.IsDesending == true ?  stocks.OrderByDescending(u => u.Symbol) : stocks.OrderBy(u => u.Symbol);
+                }
+                else if(query.OrderBy == "ComponyName")
+                {
+                    stocks = query.IsDesending == true ? stocks.OrderByDescending(u => u.ComponyName) : stocks.OrderBy(u => u.ComponyName);
+                }
+                else if(query.OrderBy == "Purchase")
+                {
+                    stocks = query.IsDesending == true ? stocks.OrderByDescending(u => u.Purchase) : stocks.OrderBy(u => u.Purchase);
+                }
+                else if(query.OrderBy == "LastDiv")
+                {
+                    stocks = query.IsDesending == true ? stocks.OrderByDescending(u => u.LastDiv) : stocks.OrderBy(u => u.LastDiv);
+                }
+                else if(query.OrderBy == "Industry")
+                {
+                    stocks = query.IsDesending == true ? stocks.OrderByDescending(u => u.Industry) : stocks.OrderBy(u => u.Purchase);
+                }
+                else if(query.OrderBy == "MarketCap")
+                {
+                    stocks = query.IsDesending == true ? stocks.OrderByDescending(u => u.MarketCap) : stocks.OrderBy(u => u.MarketCap);
+                }
+            }
             return await stocks.ToListAsync();
         }
 
