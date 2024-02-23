@@ -31,6 +31,7 @@ namespace Finstock.Api.Repository
         public async Task<List<Stock>> GetAllStocksAsync(QueryObjectStock query)
         {
             var stocks = _context.Stocks.Include(c => c.Comments).AsQueryable();
+            //filtering
             if (!string.IsNullOrWhiteSpace(query.Symbol))
             {
                 stocks=stocks.Where(stock => stock.Symbol.Contains(query.Symbol));
@@ -43,6 +44,7 @@ namespace Finstock.Api.Repository
             {
                 stocks=stocks.Where(stock=>stock.ComponyName.Contains(query.Industry));
             }
+            //sorting
             if (!string.IsNullOrWhiteSpace(query.OrderBy))
             {
                 if (query.OrderBy == "Symbol")
@@ -70,7 +72,10 @@ namespace Finstock.Api.Repository
                     stocks = query.IsDesending == true ? stocks.OrderByDescending(u => u.MarketCap) : stocks.OrderBy(u => u.MarketCap);
                 }
             }
-            return await stocks.ToListAsync();
+            //pagination
+            var skipNumber = (query.PageNumber - 1) * query.PageSize;
+
+            return await stocks.Skip(skipNumber).Take(query.PageSize).ToListAsync();
         }
 
         public async Task<Stock?> GetStockByIdAsync(int id)
