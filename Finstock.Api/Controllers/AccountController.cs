@@ -1,4 +1,5 @@
 ﻿using Finstock.Api.DTOs.Account;
+using Finstock.Api.Interfaces;
 using Finstock.Api.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -11,9 +12,11 @@ namespace Finstock.Api.Controllers
     public class AccountController : ControllerBase
     {
         private readonly UserManager<AppUser> _userManager;
-        public AccountController(UserManager<AppUser> userManager)
+        private readonly ITokenService _tokenService;
+        public AccountController(UserManager<AppUser> userManager,ITokenService tokenService)
         {
             _userManager = userManager;
+            _tokenService = tokenService;
         }
 
         [HttpPost("register")]
@@ -34,7 +37,12 @@ namespace Finstock.Api.Controllers
                     var roleAdded = await _userManager.AddToRoleAsync(appUser, "User");
                     if (roleAdded.Succeeded)
                     {
-                        return Ok(roleAdded);
+                        return Ok(new NewUserDto
+                        {
+                            UserName = appUser.UserName,
+                            Email = appUser.Email,
+                            Token = _tokenService.CreateToken(appUser)
+                        });
                     }
                     else
                     {

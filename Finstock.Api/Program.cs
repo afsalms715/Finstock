@@ -2,6 +2,7 @@ using Finstock.Api.Data;
 using Finstock.Api.Interfaces;
 using Finstock.Api.Models;
 using Finstock.Api.Repository;
+using Finstock.Api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -53,6 +54,8 @@ options.TokenValidationParameters = new TokenValidationParameters {
             )
     };
 });
+
+builder.Services.AddScoped<ITokenService,TokenService>();
 
 var app = builder.Build();
 
