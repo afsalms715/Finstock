@@ -7,11 +7,13 @@ using System.Net.WebSockets;
 using Microsoft.EntityFrameworkCore;
 using Finstock.Api.Interfaces;
 using Finstock.Api.Helper;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Finstock.Api.Controllers
 {
     [Route("api/stock")]
     [ApiController]
+    [Authorize]
     public class StockController : ControllerBase
     {
         private readonly ApplicationDbContext context;

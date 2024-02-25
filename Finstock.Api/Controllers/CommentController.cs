@@ -2,6 +2,7 @@
 using Finstock.Api.Interfaces;
 using Finstock.Api.Mappers;
 using Finstock.Api.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +10,7 @@ namespace Finstock.Api.Controllers
 {
     [Route("api/comment")]
     [ApiController]
+    [Authorize]
     public class CommentController : ControllerBase
     {
         private readonly ICommentRepository commentRepo;
