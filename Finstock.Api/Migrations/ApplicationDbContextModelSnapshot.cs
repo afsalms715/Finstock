@@ -119,6 +119,21 @@ namespace Finstock.Api.Migrations
                     b.ToTable("Comments");
                 });
 
+            modelBuilder.Entity("Finstock.Api.Models.Portfolio", b =>
+                {
+                    b.Property<int>("StockId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("StockId", "AppUserId");
+
+                    b.HasIndex("AppUserId");
+
+                    b.ToTable("Portfolios");
+                });
+
             modelBuilder.Entity("Finstock.Api.Models.Stock", b =>
                 {
                     b.Property<int>("Id")
@@ -182,13 +197,13 @@ namespace Finstock.Api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "39fc2b49-063b-4826-a7e7-032b3b65d3d1",
+                            Id = "ff651b95-14c8-43c6-b79a-1e3b9129b354",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "400bf2e5-b359-48ec-98f5-3579ccf4cc14",
+                            Id = "91dddbf4-d984-4a5c-b3e1-3e5bcc437f07",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -309,6 +324,25 @@ namespace Finstock.Api.Migrations
                     b.Navigation("Stock");
                 });
 
+            modelBuilder.Entity("Finstock.Api.Models.Portfolio", b =>
+                {
+                    b.HasOne("Finstock.Api.Models.AppUser", "AppUser")
+                        .WithMany("Portfolios")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Finstock.Api.Models.Stock", "Stock")
+                        .WithMany("Portfolios")
+                        .HasForeignKey("StockId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+
+                    b.Navigation("Stock");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -360,9 +394,16 @@ namespace Finstock.Api.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Finstock.Api.Models.AppUser", b =>
+                {
+                    b.Navigation("Portfolios");
+                });
+
             modelBuilder.Entity("Finstock.Api.Models.Stock", b =>
                 {
                     b.Navigation("Comments");
+
+                    b.Navigation("Portfolios");
                 });
 #pragma warning restore 612, 618
         }

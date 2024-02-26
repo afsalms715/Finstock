@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Finstock.Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240223165843_identity")]
-    partial class identity
+    [Migration("20240226095817_tableLink")]
+    partial class tableLink
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -122,6 +122,21 @@ namespace Finstock.Api.Migrations
                     b.ToTable("Comments");
                 });
 
+            modelBuilder.Entity("Finstock.Api.Models.Portfolio", b =>
+                {
+                    b.Property<int>("StockId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("StockId", "AppUserId");
+
+                    b.HasIndex("AppUserId");
+
+                    b.ToTable("Portfolios");
+                });
+
             modelBuilder.Entity("Finstock.Api.Models.Stock", b =>
                 {
                     b.Property<int>("Id")
@@ -181,6 +196,20 @@ namespace Finstock.Api.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "ff651b95-14c8-43c6-b79a-1e3b9129b354",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "91dddbf4-d984-4a5c-b3e1-3e5bcc437f07",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -298,6 +327,25 @@ namespace Finstock.Api.Migrations
                     b.Navigation("Stock");
                 });
 
+            modelBuilder.Entity("Finstock.Api.Models.Portfolio", b =>
+                {
+                    b.HasOne("Finstock.Api.Models.AppUser", "AppUser")
+                        .WithMany("Portfolios")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Finstock.Api.Models.Stock", "Stock")
+                        .WithMany("Portfolios")
+                        .HasForeignKey("StockId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+
+                    b.Navigation("Stock");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -349,9 +397,16 @@ namespace Finstock.Api.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Finstock.Api.Models.AppUser", b =>
+                {
+                    b.Navigation("Portfolios");
+                });
+
             modelBuilder.Entity("Finstock.Api.Models.Stock", b =>
                 {
                     b.Navigation("Comments");
+
+                    b.Navigation("Portfolios");
                 });
 #pragma warning restore 612, 618
         }
