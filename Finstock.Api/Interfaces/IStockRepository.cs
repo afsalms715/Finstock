@@ -8,6 +8,7 @@ namespace Finstock.Api.Interfaces
     {
         Task<List<Stock>> GetAllStocksAsync(QueryObjectStock query);
         Task<Stock?> GetStockByIdAsync(int id);
+        Task<Stock?> GetStockBySymbol(string symbol);
         Task<Stock> CreateStokcAsync(Stock stock);
         Task<Stock?> UpdateStockAsync(int id,UpdateStockDto stockDto);
         Task<Stock> DeleteStockByIdAsync(int id);      

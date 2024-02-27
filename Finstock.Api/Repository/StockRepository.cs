@@ -114,5 +114,10 @@ namespace Finstock.Api.Repository
         {
             return await _context.Stocks.AnyAsync(s=>s.Id==StockId);//checking any data like 
         }
+
+        public async Task<Stock?> GetStockBySymbol(string symbol)
+        {
+            return await _context.Stocks.FirstOrDefaultAsync(x => x.Symbol == symbol);
+        }
     }
 }
