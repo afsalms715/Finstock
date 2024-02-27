@@ -61,5 +61,25 @@ namespace Finstock.Api.Controllers
             return Created();
 
         }
+
+        [HttpDelete]
+        [Authorize]
+        public async Task<IActionResult> DeleteAsync(string symbol)
+        {
+            var username = User.GetUsername();
+            var appUser = await _userManager.FindByNameAsync(username);
+
+            var userPortfolio = await _portfolioRepository.GetUserPortfolio(appUser);
+            var filterPortfolio=userPortfolio.Where(x=>x.Symbol.ToLower() == symbol.ToLower());
+            if(filterPortfolio.Count()==1)
+            {
+                _portfolioRepository.DeletePortfolio(appUser, symbol);
+            }
+            else
+            {
+                return BadRequest("Stock not found in your portfolio");
+            }
+            return Ok();
+        }
     }
 }

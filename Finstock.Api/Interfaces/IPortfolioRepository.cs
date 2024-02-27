@@ -6,5 +6,6 @@ namespace Finstock.Api.Interfaces
     {
         Task<List<Stock>> GetUserPortfolio(AppUser appUser);
         Task<Portfolio> AddPortfolio(Portfolio portfolio);
+        Task<Portfolio> DeletePortfolio(AppUser appUser, string symbol);
     }
 }
