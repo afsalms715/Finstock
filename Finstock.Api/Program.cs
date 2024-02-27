@@ -24,6 +24,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(option =>
 
 builder.Services.AddScoped<IStockRepository, StockRepository>();//DI stock
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+builder.Services.AddScoped<IPortfolioRepository, PortfolioRepository>();
 
 builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
 {

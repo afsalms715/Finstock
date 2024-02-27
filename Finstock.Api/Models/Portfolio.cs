@@ -1,5 +1,8 @@
-﻿namespace Finstock.Api.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Finstock.Api.Models
 {
+    [Table("Portfolios")]
     public class Portfolio
     {
         public int StockId { get; set; }

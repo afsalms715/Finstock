@@ -17,15 +17,16 @@ namespace Finstock.Api.Data
             base.OnModelCreating(builder);
 
             //manay to many linking
-            builder.Entity<Portfolio>(x=>x.HasKey(p=>new {p.StockId,p.AppUserId}));//seting has key
-
-            builder.Entity<Portfolio>().HasOne(p => p.Stock)
-                .WithMany(s => s.Portfolios)
-                .HasForeignKey(p => p.StockId).IsRequired();//
+            builder.Entity<Portfolio>(x=>x.HasKey(p=>new { p.AppUserId,p.StockId}));//seting has key
 
             builder.Entity<Portfolio>().HasOne(p => p.AppUser)
                 .WithMany(a => a.Portfolios)
-                .HasForeignKey(p => p.AppUserId).IsRequired();
+                .HasForeignKey(p => p.AppUserId);
+
+            builder.Entity<Portfolio>().HasOne(p => p.Stock)
+                .WithMany(s => s.Portfolios)
+                .HasForeignKey(p => p.StockId);//
+ 
 
             List<IdentityRole> roles = new List<IdentityRole>
             {

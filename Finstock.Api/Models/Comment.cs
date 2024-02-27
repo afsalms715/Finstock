@@ -1,5 +1,8 @@
-﻿namespace Finstock.Api.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Finstock.Api.Models
 {
+    [Table("Comments")]
     public class Comment
     {
         public int Id { get; set; }
