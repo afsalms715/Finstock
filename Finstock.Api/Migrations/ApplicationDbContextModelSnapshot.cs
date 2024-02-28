@@ -95,6 +95,10 @@ namespace Finstock.Api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("AppUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -113,6 +117,8 @@ namespace Finstock.Api.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
 
                     b.HasIndex("StockId");
 
@@ -197,13 +203,13 @@ namespace Finstock.Api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "938f122a-d31d-4e83-9ed9-7835d588ecc2",
+                            Id = "5c8512ea-c9af-41bc-a51d-9605e2f95484",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "c439d77b-b5aa-40b1-9439-69f7032acff0",
+                            Id = "1be692be-cd9e-4d77-bd18-79a6fe4507a6",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -317,9 +323,17 @@ namespace Finstock.Api.Migrations
 
             modelBuilder.Entity("Finstock.Api.Models.Comment", b =>
                 {
+                    b.HasOne("Finstock.Api.Models.AppUser", "AppUser")
+                        .WithMany()
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Finstock.Api.Models.Stock", "Stock")
                         .WithMany("Comments")
                         .HasForeignKey("StockId");
+
+                    b.Navigation("AppUser");
 
                     b.Navigation("Stock");
                 });

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Finstock.Api.Migrations
 {
     /// <inheritdoc />
-    public partial class tableLink : Migration
+    public partial class oneTOOneCommentToUser : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -186,11 +186,18 @@ namespace Finstock.Api.Migrations
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    StockId = table.Column<int>(type: "int", nullable: true)
+                    StockId = table.Column<int>(type: "int", nullable: true),
+                    AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Comments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Comments_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Comments_Stocks_StockId",
                         column: x => x.StockId,
@@ -207,7 +214,7 @@ namespace Finstock.Api.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Portfolios", x => new { x.StockId, x.AppUserId });
+                    table.PrimaryKey("PK_Portfolios", x => new { x.AppUserId, x.StockId });
                     table.ForeignKey(
                         name: "FK_Portfolios_AspNetUsers_AppUserId",
                         column: x => x.AppUserId,
@@ -227,8 +234,8 @@ namespace Finstock.Api.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "91dddbf4-d984-4a5c-b3e1-3e5bcc437f07", null, "User", "USER" },
-                    { "ff651b95-14c8-43c6-b79a-1e3b9129b354", null, "Admin", "ADMIN" }
+                    { "1be692be-cd9e-4d77-bd18-79a6fe4507a6", null, "User", "USER" },
+                    { "5c8512ea-c9af-41bc-a51d-9605e2f95484", null, "Admin", "ADMIN" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -271,14 +278,19 @@ namespace Finstock.Api.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Comments_AppUserId",
+                table: "Comments",
+                column: "AppUserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Comments_StockId",
                 table: "Comments",
                 column: "StockId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Portfolios_AppUserId",
+                name: "IX_Portfolios_StockId",
                 table: "Portfolios",
-                column: "AppUserId");
+                column: "StockId");
         }
 
         /// <inheritdoc />
