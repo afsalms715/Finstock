@@ -1,9 +1,11 @@
 ﻿using Finstock.Api.DTOs.Comment;
+using Finstock.Api.Extentions;
 using Finstock.Api.Interfaces;
 using Finstock.Api.Mappers;
 using Finstock.Api.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Finstock.Api.Controllers
@@ -15,10 +17,12 @@ namespace Finstock.Api.Controllers
     {
         private readonly ICommentRepository commentRepo;
         private readonly IStockRepository stockRepo;
-        public CommentController(ICommentRepository CommentRepo,IStockRepository stockRepo)
+        private readonly UserManager<AppUser> _userManager;
+        public CommentController(ICommentRepository CommentRepo,IStockRepository stockRepo,UserManager<AppUser> userManager)
         {
             this.commentRepo = CommentRepo;
             this.stockRepo = stockRepo;
+            _userManager = userManager;
         }
 
         [HttpGet]
@@ -45,11 +49,16 @@ namespace Finstock.Api.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
+
+            var username = User.GetUsername();
+            var appUser = await _userManager.FindByNameAsync(username);
+
             if(!await stockRepo.IsStockExist(StockId))
             {
                 return BadRequest("Stock Not Exisit");
             }
             var comment = createCommentDto.FromCreateCommentDtoToComment(StockId);
+            comment.AppUserId = appUser.Id;
             await commentRepo.CreateComment(comment);
             return CreatedAtAction(nameof(GetById), new {id=comment.Id},comment.ToCommentDto());
         }

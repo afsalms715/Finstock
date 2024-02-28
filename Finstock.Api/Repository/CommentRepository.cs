@@ -33,13 +33,13 @@ namespace Finstock.Api.Repository
 
         public async Task<List<Comment>> GetAll()
         {
-            var comments = await context.Comments.ToListAsync();
+            var comments = await context.Comments.Include(a=>a.AppUser).ToListAsync();
             return comments;
         }
 
         public async Task<Comment?> GetById(int id)
         {
-            var commnet= await context.Comments.FindAsync(id);
+            var commnet= await context.Comments.Include(a=>a.AppUser).FirstOrDefaultAsync(x=>x.Id==id);
             return commnet;
         }
 

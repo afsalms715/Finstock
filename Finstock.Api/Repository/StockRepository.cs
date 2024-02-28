@@ -30,7 +30,7 @@ namespace Finstock.Api.Repository
 
         public async Task<List<Stock>> GetAllStocksAsync(QueryObjectStock query)
         {
-            var stocks = _context.Stocks.Include(c => c.Comments).AsQueryable();
+            var stocks = _context.Stocks.Include(c => c.Comments).ThenInclude(a=>a.AppUser).AsQueryable();
             //filtering
             if (!string.IsNullOrWhiteSpace(query.Symbol))
             {
@@ -80,7 +80,7 @@ namespace Finstock.Api.Repository
 
         public async Task<Stock?> GetStockByIdAsync(int id)
         {
-            var stock =await _context.Stocks.Include(c=>c.Comments).FirstOrDefaultAsync(i=>i.Id==id);
+            var stock =await _context.Stocks.Include(c=>c.Comments).ThenInclude(a=>a.AppUser).FirstOrDefaultAsync(i=>i.Id==id);
             return stock;
         }
 
