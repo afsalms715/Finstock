@@ -32,5 +32,18 @@ namespace Finstock.Api.Mappers
                 MarketCap = stockModel.MarketCap
             };
         }
+
+        public static Stock ToStockFromFMPStock(this FMPStock stockModel)
+        {
+            return new Stock()
+            {
+                Symbol = stockModel.symbol,
+                ComponyName = stockModel.companyName,
+                Purchase = (decimal)stockModel.price,
+                LastDiv = stockModel.lastDiv,
+                Industry = stockModel.industry,
+                MarketCap = (int)stockModel.mktCap
+            };
+        }
     }
 }

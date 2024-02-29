@@ -18,11 +18,13 @@ namespace Finstock.Api.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly IPortfolioRepository  _portfolioRepository;
         private readonly IStockRepository _stockRepository;
-        public PortfolioController(UserManager<AppUser> userManger,IPortfolioRepository portfolioRepository,IStockRepository stockRepository)
+        private readonly IFMPService _fMPService;
+        public PortfolioController(UserManager<AppUser> userManger,IPortfolioRepository portfolioRepository,IStockRepository stockRepository,IFMPService fMPService)
         {
             _userManager = userManger;
             _portfolioRepository = portfolioRepository;
             _stockRepository = stockRepository;
+            _fMPService = fMPService;
         }
 
         [HttpGet]
@@ -42,6 +44,19 @@ namespace Finstock.Api.Controllers
             var username = User.GetUsername();
             var appUser = await _userManager.FindByNameAsync(username);
             var stock = await _stockRepository.GetStockBySymbol(symbol);
+
+            if (stock == null)
+            {
+                stock = await _fMPService.GetStockFromFMP(symbol);
+                if(stock != null)
+                {
+                    _stockRepository.CreateStokcAsync(stock);
+                }
+                else
+                {
+                    return BadRequest("Stock Not Found !");
+                }
+            }
 
             if (stock == null) return BadRequest("Stock not found !");
 
