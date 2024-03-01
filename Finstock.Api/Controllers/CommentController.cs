@@ -1,5 +1,6 @@
 ﻿using Finstock.Api.DTOs.Comment;
 using Finstock.Api.Extentions;
+using Finstock.Api.Helper;
 using Finstock.Api.Interfaces;
 using Finstock.Api.Mappers;
 using Finstock.Api.Models;
@@ -29,9 +30,9 @@ namespace Finstock.Api.Controllers
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] QueryObjectComment queryObject)
         {
-            var comments=await commentRepo.GetAll();
+            var comments=await commentRepo.GetAll(queryObject);
             var commentDtos = comments.Select(C => C.ToCommentDto());
             return Ok(commentDtos.ToList());
         }

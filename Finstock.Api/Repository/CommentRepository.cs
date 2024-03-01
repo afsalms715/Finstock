@@ -1,4 +1,5 @@
 ﻿using Finstock.Api.Data;
+using Finstock.Api.Helper;
 using Finstock.Api.Interfaces;
 using Finstock.Api.Models;
 using Microsoft.EntityFrameworkCore;
@@ -31,10 +32,15 @@ namespace Finstock.Api.Repository
             return comment;
         }
 
-        public async Task<List<Comment>> GetAll()
+        public async Task<List<Comment>> GetAll(QueryObjectComment queryObject)
         {
-            var comments = await context.Comments.Include(a=>a.AppUser).ToListAsync();
-            return comments;
+            var comments = context.Comments.Include(a => a.AppUser).AsQueryable();
+            var stockComment = comments.Where(x => x.Stock.Symbol.ToLower() == queryObject.Symbol.ToLower());
+            if (queryObject.IsDecending)
+            {
+                return await stockComment.OrderByDescending(x => x.CreatedOn).ToListAsync();
+            }
+            return await stockComment.OrderBy(x => x.CreatedOn).ToListAsync();
         }
 
         public async Task<Comment?> GetById(int id)
