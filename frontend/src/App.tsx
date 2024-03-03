@@ -1,12 +1,13 @@
 import Card from './components/Card/Card.tsx'
 import './App.css'
+import CardList from './components/CardList/CardList.tsx'
 
 function App() {
 
   return (
-    <>
-     <Card/>
-    </>
+    <div>
+     <CardList/>
+    </div>
   )
 }
 
