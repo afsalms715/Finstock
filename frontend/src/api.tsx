@@ -7,15 +7,15 @@ export interface SearchResponce{
 
 export const SearchCompony=async (query:string)=>{
     try{
-        var result=await axios.get<SearchResponce>(`https://financialmodelingprep.com/api/v3/profile/${query}?apikey=${import.meta.env.VITE_REACT_APP_API_KEY}`);
+        const result=await axios.get<SearchResponce>(`https://financialmodelingprep.com/api/v3/search?query=${query}&limit=10&exchange=NASDAQ&apikey=${import.meta.env.VITE_REACT_APP_API_KEY}`);
         return result;
     }catch(error){
         if(axios.isAxiosError(error)){
             console.log("error message:"+error);
-            return error;
+            return error.message;
         }else{
             console.log("unexpected error:"+error);
-            return error;
+            return "unexpected error accure";
         }
     }
 }
