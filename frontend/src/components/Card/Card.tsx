@@ -1,5 +1,6 @@
 import React from 'react'
 import { CompanySearch } from '../../compony.d';
+import AddPortfolio from '../Portfolio/AddPortfolio/AddPortfolio';
 
 interface Props  {
     id:string;
@@ -17,6 +18,7 @@ const Card:React.FC<Props> = ({companyData}:Props):JSX.Element => {
                 {companyData.exchangeShortName}-{companyData.stockExchange}
             </p>
         </div>
+        <AddPortfolio/>
     </div>
   )
 }
