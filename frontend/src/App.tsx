@@ -4,11 +4,13 @@ import CardList from "./components/CardList/CardList.tsx";
 import SearchBox from "./components/Search/SearchBox.tsx";
 import { CompanySearch } from "./compony.d.tsx";
 import { SearchCompony } from "./api.tsx";
+import PortfolioList from "./components/Portfolio/PortfolioList/PortfolioList.tsx";
 
 function App() {
   const [search, setSearch] = useState<string>("");
   const [searchResult, setSearchResult] = useState<CompanySearch[]>([]);
   const [serverError, setServerError] = useState<string|null>(null);
+  const [portfolios,setPortfolios]=useState<string[]>([]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
@@ -26,9 +28,11 @@ function App() {
     console.log(searchResult);
   };
 
-  const onAddProtfolioSubmit=(e:SyntheticEvent)=>{
+  const onAddProtfolioSubmit=(e:any)=>{
     e.preventDefault();
-    console.log(e);
+    const exist=portfolios.find(value=>value===e.target[0].value);
+    if(exist) return;
+    setPortfolios([...portfolios,e.target[0].value]);
   }
 
   return (
@@ -39,6 +43,7 @@ function App() {
         OnSearchSubmit={OnSearchSubmit}
       />
       {serverError && <div>Unable to Connect API</div>}
+      <PortfolioList portfolios={portfolios}/>
       <CardList searchResult={searchResult} onAddProtfolioSubmit={onAddProtfolioSubmit}/>
     </div>
   );
