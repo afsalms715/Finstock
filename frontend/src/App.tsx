@@ -15,7 +15,8 @@ function App() {
     console.log(search);
   };
 
-  const OnClick = async (e: SyntheticEvent) => {
+  const OnSearchSubmit = async (e: SyntheticEvent) => {
+    e.preventDefault();
     const result = await SearchCompony(search);
     if (typeof result === "string") {
       setServerError(result);
@@ -25,15 +26,20 @@ function App() {
     console.log(searchResult);
   };
 
+  const onAddProtfolioSubmit=(e:SyntheticEvent)=>{
+    e.preventDefault();
+    console.log(e);
+  }
+
   return (
     <div>
       <SearchBox
         search={search}
         handleChange={handleChange}
-        OnClick={OnClick}
+        OnSearchSubmit={OnSearchSubmit}
       />
       {serverError && <div>Unable to Connect API</div>}
-      <CardList searchResult={searchResult}/>
+      <CardList searchResult={searchResult} onAddProtfolioSubmit={onAddProtfolioSubmit}/>
     </div>
   );
 }

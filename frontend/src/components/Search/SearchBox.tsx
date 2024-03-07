@@ -3,17 +3,13 @@ import React, { ChangeEvent, SyntheticEvent } from "react";
 interface Props {
   search: string | undefined;
   handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  OnClick: (e: SyntheticEvent) => void;
+  OnSearchSubmit: (e: SyntheticEvent) => void;
 }
 
-const SearchBox: React.FC<Props> = ({
-  search,
-  handleChange,
-  OnClick,
-}): JSX.Element => {
+const SearchBox: React.FC<Props> = ({search,handleChange,OnSearchSubmit,}): JSX.Element => {
   return (
     <div className="w-72">
-      <div className="relative w-full min-w-[200px] h-10 flex">
+      <form onSubmit={OnSearchSubmit} className="relative w-full min-w-[200px] h-10 flex">
         <input
           className="peer w-full h-full bg-transparent text-blue-gray-700 font-sans font-normal outline outline-0 focus:outline-0 disabled:bg-blue-gray-50 disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[7px] border-blue-gray-200 focus:border-gray-900"
           placeholder=" "
@@ -25,12 +21,11 @@ const SearchBox: React.FC<Props> = ({
         </label>
         <button
           className="select-none rounded-lg border border-gray-900 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-gray-900 transition-all hover:opacity-75 focus:ring focus:ring-gray-300 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-          type="button"
-          onClick={OnClick}
+          type="submit"
         >
           Search
         </button>
-      </div>
+      </form>
     </div>
   );
 };

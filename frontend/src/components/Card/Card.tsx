@@ -1,13 +1,14 @@
-import React from 'react'
+import React, { SyntheticEvent } from 'react'
 import { CompanySearch } from '../../compony.d';
 import AddPortfolio from '../Portfolio/AddPortfolio/AddPortfolio';
 
 interface Props  {
     id:string;
     companyData:CompanySearch;
+    onAddProtfolioSubmit:(e:SyntheticEvent)=>void;
 }
 
-const Card:React.FC<Props> = ({companyData}:Props):JSX.Element => {
+const Card:React.FC<Props> = ({companyData,onAddProtfolioSubmit}:Props):JSX.Element => {
   return (  
     <div className="max-w-sm md:w-[19%] rounded overflow-hidden shadow-lg m-1">
         <img className="w-full" src="https://i.ibb.co/WBWWD4h/685-6854994-react-logo-no-background-hd-png-download.png" alt="Sunset in the mountains"/>
@@ -18,7 +19,7 @@ const Card:React.FC<Props> = ({companyData}:Props):JSX.Element => {
                 {companyData.exchangeShortName}-{companyData.stockExchange}
             </p>
         </div>
-        <AddPortfolio/>
+        <AddPortfolio onAddProtfolioSubmit={onAddProtfolioSubmit} symbol={companyData.symbol}/>
     </div>
   )
 }
