@@ -5,6 +5,8 @@ import SearchBox from "./components/Search/SearchBox.tsx";
 import { CompanySearch } from "./compony.d.tsx";
 import { SearchCompony } from "./api.tsx";
 import PortfolioList from "./components/Portfolio/PortfolioList/PortfolioList.tsx";
+import Navbar from "./components/Navbar/Navbar.tsx";
+import Hero from "./components/Hero/Hero.tsx";
 
 function App() {
   const [search, setSearch] = useState<string>("");
@@ -35,15 +37,23 @@ function App() {
     setPortfolios([...portfolios,e.target[0].value]);
   }
 
+  const onDeletePortfolio=(e:any)=>{
+    e.preventDefault();
+    const removed=portfolios.filter(value=>value!==e.target[0].value);
+    setPortfolios(removed);
+  }
+
   return (
     <div>
+      <Navbar/>
+      <Hero/>
       <SearchBox
         search={search}
         handleChange={handleChange}
         OnSearchSubmit={OnSearchSubmit}
       />
       {serverError && <div>Unable to Connect API</div>}
-      <PortfolioList portfolios={portfolios}/>
+      <PortfolioList portfolios={portfolios} onDeletePortfolio={onDeletePortfolio}/>
       <CardList searchResult={searchResult} onAddProtfolioSubmit={onAddProtfolioSubmit}/>
     </div>
   );
