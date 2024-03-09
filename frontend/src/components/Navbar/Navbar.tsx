@@ -1,5 +1,5 @@
-import React from "react";
 import finstockLogo from "./finstockLogo.png";
+import { Link } from "react-router-dom";
 
 type Props = {};
 
@@ -11,12 +11,12 @@ const Navbar = (props: Props) => {
       </div>
       <div className="flex-grow flex lg:items-center md:w-auto ">
         <div className="text-sm  lg:w-[45%]">
-          <a
-            href="#responsive-header"
+          <Link
+            to="/search"
             className="block mt-1 lg:inline-block lg:mt-0  hover:text-blue-800 mr-4 pl-5"
           >
-            Dashbord
-          </a>
+            Search
+          </Link>
         </div>
         <div className="w-[80%] lg:w-[50%]">
           <a
