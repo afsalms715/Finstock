@@ -4,6 +4,7 @@ import { CompanyProfile } from "../../compony.d";
 import { GetCompanyInfo } from "../../api";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import CompanyDashbord from "../../components/CompanyDashbord/CompanyDashbord";
+import Tile from "../../components/Tile/Tile";
 
 type Props = {};
 
@@ -22,7 +23,12 @@ const ComponyPage = (props: Props) => {
   return (
     <div className="flex">
       <Sidebar />
-      <CompanyDashbord companyProfile={companyProfile} />    
+      <CompanyDashbord companyProfile={companyProfile}>
+        <Tile title="Last Divident" value={"$"+companyProfile?.lastDiv.toString()} />
+        <Tile title="Market Cap" value={"$"+companyProfile?.mktCap.toString()} />
+        <Tile title="CEO" value={companyProfile?.ceo.toString()} />
+        <Tile title="Price" value={companyProfile?.price.toString()} />
+      </CompanyDashbord>
     </div>
   );
 };
