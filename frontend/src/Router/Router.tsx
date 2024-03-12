@@ -5,6 +5,7 @@ import SearchPage from "../pages/SearchPage/SearchPage";
 import ComponyPage from "../pages/ComponyPage/ComponyPage";
 import CompanyProfile from "../components/CompanyProfile/CompanyProfile";
 import IncomeStatement from "../components/IncomeStatement/IncomeStatement";
+import DesignGuid from "../pages/DesignGuid/DesignGuid";
 
 export const router = createBrowserRouter([
   {
@@ -27,6 +28,7 @@ export const router = createBrowserRouter([
           },
         ],
       },
+      {path:"design-guid",element:<DesignGuid/>}
     ],
   },
 ]);
