@@ -3,13 +3,30 @@ import App from "../App";
 import HomePage from "../pages/HomePaage/HomePage";
 import SearchPage from "../pages/SearchPage/SearchPage";
 import ComponyPage from "../pages/ComponyPage/ComponyPage";
+import CompanyProfile from "../components/CompanyProfile/CompanyProfile";
+import IncomeStatement from "../components/IncomeStatement/IncomeStatement";
 
-export const router=createBrowserRouter([{
-    path:"/",
-    element:<App/>,
-    children:[
-        {path:"",element:<HomePage/>},
-        {path:"search",element:<SearchPage/>},
-        {path:"company/:ticker",element:<ComponyPage/>}
-    ]
-}])
+export const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+    children: [
+      { path: "", element: <HomePage /> },
+      { path: "search", element: <SearchPage /> },
+      {
+        path: "company/:ticker",
+        element: <ComponyPage />,
+        children: [
+          {
+            path: "company-profile",
+            element: <CompanyProfile />,
+          },
+          {
+            path: "income-statement",
+            element: <IncomeStatement />,
+          },
+        ],
+      },
+    ],
+  },
+]);
