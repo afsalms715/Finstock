@@ -32,12 +32,12 @@ const Table = (props: Props) => {
 
     const renderHeaders=config.map((val)=>{
         return(
-            <th className='bg-teal-500 text-white border border-white'>{val?.label}</th>
+            <th className='bg-teal-500 text-white border border-white p-1'>{val?.label}</th>
         )
     })
   return (
     <div className='bg-white'>
-        <table className='table-auto mx-auto'>
+        <table className='table-auto mx-auto shadow-md rounded-md'>
             <thead>
                 {renderHeaders}
             </thead>
