@@ -21,7 +21,7 @@ const DesignGuid = (props: Props) => {
         <h1>Design Guid</h1><br/>
         <h2>This is the page where will house various design aspect of our app</h2>
         <RatioList data={TestDataCompany[0]} config={tableConfig} />
-        <Table/>
+        <Table data={TestDataCompany[0]} config={tableConfig}/>
     </div>
   )
 }

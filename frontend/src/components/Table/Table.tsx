@@ -1,22 +1,13 @@
 import React from 'react'
 import {testIncomeStatementData} from './TestData';
 
-type Props = {}
-const data=testIncomeStatementData;
-type Company=(typeof data)[0];
+type Props = {
+    data:any;
+    config:any;
+}
 
-const config=[
-    {
-        label:"Year",
-        render:(company:Company)=>new Date(company.acceptedDate).getFullYear(),
-    },
-    {
-        label:"Cost Of Revenue",
-        render:(compony:Company)=>compony.costOfRevenue,
-    }
-]
 
-const Table = (props: Props) => {
+const Table = ({data,config}: Props) => {
     const renderRows=data.map((company:any)=>{
         return(
             <tr>
@@ -30,7 +21,7 @@ const Table = (props: Props) => {
         )
     })
 
-    const renderHeaders=config.map((val)=>{
+    const renderHeaders=config.map((val:any)=>{
         return(
             <th className='bg-teal-500 text-white border border-white p-1'>{val?.label}</th>
         )
