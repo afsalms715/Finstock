@@ -23,7 +23,7 @@ const ComponyPage = (props: Props) => {
   return (
     <div className="flex">
       <Sidebar />
-      <CompanyDashbord companyProfile={companyProfile}>
+      <CompanyDashbord companyProfile={companyProfile} ticker={ticker!}>
         <Tile title="Last Divident" value={"$"+companyProfile?.lastDiv.toString()} />
         <Tile title="Market Cap" value={"$"+companyProfile?.mktCap.toString()} />
         <Tile title="CEO" value={companyProfile?.ceo.toString()} />

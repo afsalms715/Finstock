@@ -1,13 +1,18 @@
-import React, { Children } from "react";
+import React, { Children, useEffect } from "react";
 import { CompanyProfile } from "../../compony.d";
-import { Outlet } from "react-router";
+import { Outlet, useNavigate } from "react-router";
 
 interface Props {
   companyProfile: CompanyProfile | undefined;
   children: React.ReactNode;
+  ticker:string;
 }
 
-const CompanyDashbord = ({ companyProfile, children }: Props) => {
+const CompanyDashbord = ({ companyProfile, children,ticker }: Props) => {
+  const navigate=useNavigate();
+  useEffect(()=>{
+    navigate("company-profile");
+  },[])
   return (
     <>
       <div className="flex flex-grow flex-wrap">
@@ -16,7 +21,7 @@ const CompanyDashbord = ({ companyProfile, children }: Props) => {
         </div>
         {children}
         <div className="w-full">
-          <Outlet />
+          <Outlet context={ticker}/>
         </div>
       </div>
     </>
