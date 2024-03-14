@@ -7,7 +7,7 @@ type Props = {
 
 const Tile = ({title,value}: Props) => {
   return (
-    <div className="w-60 flex-auto h-14 text-center shadow-md m-2">
+    <div className=" flex-auto h-14 text-center shadow-md m-2">
       <span className="text-sm font-semibold ">{title}</span>
       <br />
       <span className="text-gray-500">{value}</span>
