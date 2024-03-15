@@ -5,6 +5,7 @@ import { GetCompanyInfo } from "../../api";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import CompanyDashbord from "../../components/CompanyDashbord/CompanyDashbord";
 import Tile from "../../components/Tile/Tile";
+import TenKFinder from "../../components/TenkFinder/TenKFinder";
 
 type Props = {};
 
@@ -28,6 +29,8 @@ const ComponyPage = (props: Props) => {
         <Tile title="Market Cap" value={"$"+companyProfile?.mktCap.toString()} />
         <Tile title="CEO" value={companyProfile?.ceo.toString()} />
         <Tile title="Price" value={companyProfile?.price.toString()} />
+        <p className="text-sm font-normal m-4">{companyProfile?.description}</p>
+        <TenKFinder ticker={ticker!}/>
       </CompanyDashbord>
     </div>
   );

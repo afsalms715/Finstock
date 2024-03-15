@@ -6,6 +6,7 @@ import {
   CompanyKeyMetrics,
   CompanyProfile,
   CompanySearch,
+  CompanyTenK,
 } from "./compony.d";
 
 export interface SearchResponce {
@@ -93,5 +94,18 @@ export const getCashFlowStatement = async (query: string) => {
     return value;
   } catch (error: any) {
     console.log("error message:" + error);
+  }
+};
+
+export const getTenK = async (query: string) => {
+  try {
+    const value = await axios.get<CompanyTenK[]>(
+      `https://financialmodelingprep.com/api/v3/sec_filings/${query}?type=10-K&page=0&apikey=${
+        import.meta.env.VITE_REACT_APP_API_KEY
+      }`
+    );
+    return value;
+  } catch (error: any) {
+    console.log(`error message:` + error);
   }
 };
