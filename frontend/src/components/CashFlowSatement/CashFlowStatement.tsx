@@ -3,6 +3,7 @@ import { useOutletContext } from "react-router";
 import { CompanyCashFlow } from "../../compony.d";
 import { getCashFlowStatement } from "../../api";
 import Table from "../Table/Table";
+import Spinner from "../Spinner/Spinner";
 
 type Props = {};
 const config = [
@@ -51,7 +52,7 @@ const config = [
 
 const CashFlowStatement = (props: Props) => {
   const ticket = useOutletContext<string>();
-  const [cashFlow, setCashFlow] = useState<CompanyCashFlow[]>([]);
+  const [cashFlow, setCashFlow] = useState<CompanyCashFlow[]>();
   useEffect(() => {
     const fetchCashFlow = async () => {
       const value = await getCashFlowStatement(ticket!);
@@ -61,7 +62,7 @@ const CashFlowStatement = (props: Props) => {
   }, []);
   return (
     <>
-      {cashFlow ? <Table config={config} data={cashFlow} /> : <>Loading...</>}
+      {cashFlow ? <Table config={config} data={cashFlow} /> : <><Spinner isLoading/></>}
     </>
   );
 };

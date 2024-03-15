@@ -3,6 +3,7 @@ import { useOutletContext } from "react-router";
 import { CompanyKeyMetrics } from "../../compony.d";
 import { getCompanyKeyMetrics } from "../../api";
 import RatioList from "../RatioList/RatioList";
+import Spinner from "../Spinner/Spinner";
 
 type Props = {};
 
@@ -68,7 +69,7 @@ const tableConfig = [
 ];
 
 const CompanyProfile = (props: Props) => {
-  const[keyMetrics,setKeyMetrics]=useState<CompanyKeyMetrics>()
+  const[keyMetrics,setKeyMetrics]=useState<CompanyKeyMetrics>();
   const ticker = useOutletContext<string>();
   useEffect(()=>{
     const callApi=async ()=>{
@@ -83,7 +84,7 @@ const CompanyProfile = (props: Props) => {
           <RatioList data={keyMetrics} config={tableConfig}/>
         </>:
         <>
-          Loading .....
+          <Spinner isLoading/>
         </>
       }
   </>;
