@@ -6,6 +6,7 @@ import Sidebar from "../../components/Sidebar/Sidebar";
 import CompanyDashbord from "../../components/CompanyDashbord/CompanyDashbord";
 import Tile from "../../components/Tile/Tile";
 import TenKFinder from "../../components/TenkFinder/TenKFinder";
+import { formatLargeMonetaryNumber } from "../../Helper/NumberFormating";
 
 type Props = {};
 
@@ -26,9 +27,9 @@ const ComponyPage = (props: Props) => {
       <Sidebar />
       <CompanyDashbord companyProfile={companyProfile} ticker={ticker!}>
         <Tile title="Last Divident" value={"$"+companyProfile?.lastDiv.toString()} />
-        <Tile title="Market Cap" value={"$"+companyProfile?.mktCap.toString()} />
-        <Tile title="CEO" value={companyProfile?.ceo.toString()} />
-        <Tile title="Price" value={companyProfile?.price.toString()} />
+        <Tile title="Sector" value={companyProfile?.sector.toString()} />
+        <Tile title="DCF" value={companyProfile?.dcf.toString()} />
+        <Tile title="Price" value={formatLargeMonetaryNumber(companyProfile?.price)} />
         <p className="text-sm font-normal m-4">{companyProfile?.description}</p>
         <TenKFinder ticker={ticker!}/>
       </CompanyDashbord>

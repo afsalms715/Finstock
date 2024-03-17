@@ -9,8 +9,8 @@ interface Props{
 const PortfolioList = ({portfolios,onDeletePortfolio}: Props) => {
   return (
     <div>
-      <h2>My Portfolio</h2>
-      <div className='flex flex-wrap'>
+      <h2 className='text-sm text-center font-medium'>My Portfolio</h2>
+      <div className='flex flex-wrap justify-center'>
         {portfolios && portfolios.map((symbol)=>{
           return <PortfolioCard symbol={symbol} onDeletePortfolio={onDeletePortfolio}/>
           })

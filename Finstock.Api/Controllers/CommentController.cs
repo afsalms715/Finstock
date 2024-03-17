@@ -42,6 +42,10 @@ namespace Finstock.Api.Controllers
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
             var comment=await commentRepo.GetById(id);
+            if (comment == null)
+            {
+                return NotFound();
+            }
             return Ok(comment.ToCommentDto());
         }
 

@@ -46,6 +46,10 @@ namespace Finstock.Api.Repository
         public async Task<Comment?> GetById(int id)
         {
             var commnet= await context.Comments.Include(a=>a.AppUser).FirstOrDefaultAsync(x=>x.Id==id);
+            if (commnet != null)
+            {
+                return null;
+            }
             return commnet;
         }
 
