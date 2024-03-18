@@ -3,3 +3,8 @@ export interface UserGeneratedToken{
     email:string;
     token:string;
 }
+
+export interface userProfile{
+    username:string;
+    email:string;
+}
