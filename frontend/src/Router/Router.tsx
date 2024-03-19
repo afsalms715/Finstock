@@ -10,6 +10,7 @@ import BalanceSheet from "../components/BalanceSheet/BalanceSheet";
 import CashFlowStatement from "../components/CashFlowSatement/CashFlowStatement";
 import LogingPage from "../pages/LoginPage/LogingPage";
 import SignupPage from "../pages/SignupPage/SignupPage";
+import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
 
 export const router = createBrowserRouter([
   {
@@ -19,10 +20,10 @@ export const router = createBrowserRouter([
       { path: "login", element: <LogingPage /> },
       { path: "signup", element: <SignupPage /> },
       { path: "", element: <HomePage /> },
-      { path: "search", element: <SearchPage /> },
+      { path: "search", element: <ProtectedRoute><SearchPage /></ProtectedRoute> },
       {
         path: "company/:ticker",
-        element: <ComponyPage />,
+        element: <ProtectedRoute><ComponyPage /></ProtectedRoute>,
         children: [
           {
             path: "company-profile",
