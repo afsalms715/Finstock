@@ -76,7 +76,9 @@ export const UserProvider = ({ children }: prop) => {
           navigate("/search");
         }
       })
-      .then((e) => toast.warning("Server Error Accure!"));
+      .catch((e) => {
+        toast.warning("Server Error Accure!");
+      });
   };
 
   const logoutUser = () => {
@@ -100,4 +102,4 @@ export const UserProvider = ({ children }: prop) => {
   );
 };
 
-export const useAuth = ()=>React.useContext(UserContext);
+export const useAuth = () => React.useContext(UserContext);
