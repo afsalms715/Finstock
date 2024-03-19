@@ -9,13 +9,15 @@ import DesignGuid from "../pages/DesignGuid/DesignGuid";
 import BalanceSheet from "../components/BalanceSheet/BalanceSheet";
 import CashFlowStatement from "../components/CashFlowSatement/CashFlowStatement";
 import LogingPage from "../pages/LoginPage/LogingPage";
+import SignupPage from "../pages/SignupPage/SignupPage";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children: [
-      {path:"login",element:<LogingPage/>},
+      { path: "login", element: <LogingPage /> },
+      { path: "signup", element: <SignupPage /> },
       { path: "", element: <HomePage /> },
       { path: "search", element: <SearchPage /> },
       {
@@ -31,16 +33,16 @@ export const router = createBrowserRouter([
             element: <IncomeStatement />,
           },
           {
-            path:"balance-sheet",
-            element:<BalanceSheet/>
+            path: "balance-sheet",
+            element: <BalanceSheet />,
           },
           {
-            path:"cash-flow",
-            element:<CashFlowStatement/>
-          }
+            path: "cash-flow",
+            element: <CashFlowStatement />,
+          },
         ],
       },
-      {path:"design-guid",element:<DesignGuid/>}
+      { path: "design-guid", element: <DesignGuid /> },
     ],
   },
 ]);

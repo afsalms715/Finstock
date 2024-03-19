@@ -1,5 +1,6 @@
 import React from "react";
 import heroImage from './istockphoto.png'
+import { Link } from "react-router-dom";
 
 type Props = {};
 
@@ -20,12 +21,12 @@ const Hero = (props: Props) => {
             <br />
             news.
           </p>
-          <a
-            href="#"
+          <Link
+            to="/login"
             className="ml-[10%] lg:ml-[23%] mt-6 inline-block text-sm px-5 py-3 leading-none border rounded text-white border-white hover:border-transparent bg-teal-500 mt-0"
           >
             Get Started
-          </a>
+          </Link>
         </div>
         <div className="w-full md:w-[50%] flex md:mt-10">
             <img src={heroImage} className="w-[600px] w-[600px] justify-center my-auto"/>
