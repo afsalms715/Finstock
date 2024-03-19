@@ -33,8 +33,8 @@ export const UserProvider = ({ children }: prop) => {
       setToken(token);
       setUser(JSON.parse(user));
       axios.defaults.headers.common["Authorization"] = "Bearer" + token;
-      setIsReady(true);
     }
+    setIsReady(true);
   }, []);
 
   const registerUser = async (
@@ -100,4 +100,4 @@ export const UserProvider = ({ children }: prop) => {
   );
 };
 
-export const useAuth = useContext(UserContext);
+export const useAuth = ()=>React.useContext(UserContext);

@@ -25,12 +25,12 @@ const Navbar = (props: Props) => {
           >
             Signup
           </a>
-          <a
-            href="#"
+          <Link
+            to="/login"
             className="inline-block text-sm px-4 py-2 leading-none border rounded text-black border-black hover:border-transparen mx-3  mt-0 float-end"
           >
             Login
-          </a>
+          </Link>
         </div>
       </div>
     </nav>
