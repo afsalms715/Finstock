@@ -20,7 +20,7 @@ const RatioList = ({data,config}: Props) => {
       </div>
     );
   });
-  return <div className="bg-white rounded-lg shadow-md h-full m-2">
+  return <div className="bg-white rounded-lg shadow-md  m-2">
     <ul className="divide-y divide-gray-400">
       {renderRows}
     </ul>
