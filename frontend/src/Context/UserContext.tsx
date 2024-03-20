@@ -48,7 +48,7 @@ export const UserProvider = ({ children }: prop) => {
           localStorage.setItem("token", resp?.data.token);
           setToken(resp?.data.token);
           const userObj = {
-            username: resp?.data.username,
+            username: resp?.data.userName,
             email: resp?.data.email,
           };
           localStorage.setItem("user", JSON.stringify(userObj));
@@ -67,9 +67,10 @@ export const UserProvider = ({ children }: prop) => {
           localStorage.setItem("token", resp?.data.token);
           setToken(resp?.data.token);
           const userObj = {
-            username: resp?.data.username,
+            username: resp?.data.userName,
             email: resp?.data.email,
           };
+          console.log(resp?.data);
           setUser(userObj);
           localStorage.setItem("user", JSON.stringify(userObj));
           toast.success("Login Successfully");

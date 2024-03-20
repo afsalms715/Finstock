@@ -5,7 +5,8 @@ import { Link } from "react-router-dom";
 type Props = {};
 
 const Navbar = (props: Props) => {
-  const { isLogin, logoutUser } = useAuth();
+  const { isLogin, logoutUser, user } = useAuth();
+  console.log(user);
   console.log(isLogin());
   return (
     <nav className="flex items-center justify-between flex-wrap bg-white px-6 md:mx-20 ">
@@ -26,28 +27,31 @@ const Navbar = (props: Props) => {
           )}
         </div>
         <div className="w-[80%] lg:w-[50%]">
-          {!isLogin() && (
-            <Link
-              to="/signup"
-              className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent bg-teal-500 mt-0 float-end"
-            >
-              Signup
-            </Link>
-          )}
           {!isLogin() ? (
-            <Link
-              to="/login"
-              className="inline-block text-sm px-4 py-2 leading-none border rounded text-black border-black hover:border-transparen mx-3  mt-0 float-end"
-            >
-              Login
-            </Link>
+            <>
+              <Link
+                to="/signup"
+                className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent bg-teal-500 mt-0 float-end"
+              >
+                Signup
+              </Link>
+              <Link
+                to="/login"
+                className="inline-block text-sm px-4 py-2 leading-none border rounded text-black border-black hover:border-transparen mx-3  mt-0 float-end"
+              >
+                Login
+              </Link>
+            </>
           ) : (
-            <button
-              onClick={logoutUser}
-              className="inline-block text-sm px-4 py-2 leading-none border rounded text-black border-black hover:border-transparen mx-3  mt-0 float-end"
-            >
-              Logout
-            </button>
+            <>
+              <button
+                onClick={logoutUser}
+                className="inline-block text-sm px-4 py-2 leading-none border rounded text-black border-black hover:border-transparen mx-3  mt-0 float-end"
+              >
+                Logout
+              </button>
+              <div className="inline-block text-gray-500 text-sm mx-3  mt-1 float-end ">Welcome {user?.username}</div>
+            </>
           )}
         </div>
       </div>

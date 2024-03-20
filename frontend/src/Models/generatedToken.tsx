@@ -1,5 +1,5 @@
 export interface UserGeneratedToken{
-    username:string;
+    userName:string;
     email:string;
     token:string;
 }
