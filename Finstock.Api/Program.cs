@@ -105,8 +105,13 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseCors(x =>
-    x.AllowAnyHeader().AllowCredentials().AllowAnyMethod().SetIsOriginAllowed(orgin => true));
+
+app.UseCors(builder =>
+{
+    builder.WithOrigins("http://localhost:5173")
+           .AllowAnyHeader()
+           .AllowAnyMethod();
+});
 
 app.MapControllers();
 

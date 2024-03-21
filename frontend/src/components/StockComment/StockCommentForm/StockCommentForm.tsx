@@ -40,6 +40,7 @@ const StockCommentForm = ({ symbol,commentSubmit}: Props) => {
                 placeholder="Type Your Comment"
                 {...register("content")}
               ></textarea>
+              <p className="text-red-600">{errors.content?.message}</p>
             </div>
             <div className="w-full md:w-full flex items-start px-3">
               <div className="-mr-1">

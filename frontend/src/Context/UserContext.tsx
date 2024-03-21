@@ -32,7 +32,7 @@ export const UserProvider = ({ children }: prop) => {
     if (user && token) {
       setToken(token);
       setUser(JSON.parse(user));
-      axios.defaults.headers.common["Authorization"] = "Bearer" + token;
+      axios.defaults.headers.common["Authorization"] = "Bearer " + token;
     }
     setIsReady(true);
   }, []);
