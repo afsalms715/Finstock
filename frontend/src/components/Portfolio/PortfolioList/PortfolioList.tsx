@@ -1,8 +1,9 @@
 import React, { SyntheticEvent } from 'react'
 import PortfolioCard from '../PortfolioCard/PortfolioCard';
+import { portfolioGet } from '../../../Models/PortfolioModel';
 
 interface Props{
-  portfolios:string[];
+  portfolios:portfolioGet[];
   onDeletePortfolio:(e:SyntheticEvent)=>void;
 }
 
@@ -11,8 +12,8 @@ const PortfolioList = ({portfolios,onDeletePortfolio}: Props) => {
     <div>
       <h2 className='text-sm text-center font-medium'>My Portfolio</h2>
       <div className='flex flex-wrap justify-center'>
-        {portfolios && portfolios.map((symbol)=>{
-          return <PortfolioCard symbol={symbol} onDeletePortfolio={onDeletePortfolio}/>
+        {portfolios && portfolios.map((data)=>{
+          return <PortfolioCard symbol={data.symbol} onDeletePortfolio={onDeletePortfolio}/>
           })
         }
       </div>

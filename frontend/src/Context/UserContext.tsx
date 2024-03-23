@@ -57,7 +57,7 @@ export const UserProvider = ({ children }: prop) => {
           navigate("/search");
         }
       })
-      .catch((e) => toast.warning("Server Error Accure!"));
+      .catch((e) => toast.warning("Server Error Accure!"+e.message));
   };
 
   const loginUser = async (username: string, password: string) => {
@@ -78,7 +78,7 @@ export const UserProvider = ({ children }: prop) => {
         }
       })
       .catch((e) => {
-        toast.warning("Server Error Accure!");
+        toast.warning("Server Error Accure!"+e.message);
       });
   };
 

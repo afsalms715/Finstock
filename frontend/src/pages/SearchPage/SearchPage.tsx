@@ -1,9 +1,11 @@
-import React, { ChangeEvent, SyntheticEvent, useState } from "react";
+import React, { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
 import { CompanySearch } from "../../compony.d";
 import { SearchCompony } from "../../api";
 import SearchBox from "../../components/Search/SearchBox";
 import PortfolioList from "../../components/Portfolio/PortfolioList/PortfolioList";
 import CardList from "../../components/CardList/CardList";
+import { portfolioGetService } from "../../Services/PortfolioService";
+import { portfolioGet } from "../../Models/PortfolioModel";
 
 type Props = {};
 
@@ -11,7 +13,16 @@ const SearchPage = (props: Props) => {
   const [search, setSearch] = useState<string>("");
   const [searchResult, setSearchResult] = useState<CompanySearch[]>([]);
   const [serverError, setServerError] = useState<string | null>(null);
-  const [portfolios, setPortfolios] = useState<string[]>([]);
+  const [portfolios, setPortfolios] = useState<portfolioGet[]|null>([]);
+
+  useEffect(()=>{
+    fetchPortfolio();
+  },[])
+
+  const fetchPortfolio= async()=>{
+    const result= await portfolioGetService();
+    setPortfolios(result?.data!);
+  }
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
@@ -31,15 +42,14 @@ const SearchPage = (props: Props) => {
 
   const onAddProtfolioSubmit = (e: any) => {
     e.preventDefault();
-    const exist = portfolios.find((value) => value === e.target[0].value);
+    const exist = portfolios?.find((value) => value.symbol === e.target[0].value);
     if (exist) return;
-    setPortfolios([...portfolios, e.target[0].value]);
+    //setPortfolios([...portfolios?, e.target[0].value]);
   };
 
   const onDeletePortfolio = (e: any) => {
     e.preventDefault();
-    const removed = portfolios.filter((value) => value !== e.target[0].value);
-    setPortfolios(removed);
+    
   };
   return (
     <>
