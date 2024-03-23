@@ -19,8 +19,8 @@ const validation=Yup.object().shape({
     content:Yup.string().required("Content is Required")
 })
 
-const StockCommentForm = ({ symbol,commentSubmit}: Props) => {
-    const {register,handleSubmit,formState:{errors}}=useForm<CommentFormInputs>({resolver:yupResolver(validation)});
+const StockCommentForm = ({commentSubmit}: Props) => {
+    const {register,handleSubmit,formState:{errors},resetField}=useForm<CommentFormInputs>({resolver:yupResolver(validation)});
   return (
     <>
       <div className="flex mx-auto items-center justify-center shadow-lg mb-4 ">

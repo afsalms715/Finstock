@@ -6,6 +6,7 @@ import RatioList from "../RatioList/RatioList";
 import Spinner from "../Spinner/Spinner";
 import { formatLargeNonMonetaryNumber, formatRatio } from "../../Helper/NumberFormating";
 import StockComment from "../StockComment/StockComment";
+import StockCommentList from "../StockCommentList/StockCommentList";
 
 type Props = {};
 
