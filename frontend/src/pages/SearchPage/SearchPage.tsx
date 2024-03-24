@@ -4,7 +4,7 @@ import { SearchCompony } from "../../api";
 import SearchBox from "../../components/Search/SearchBox";
 import PortfolioList from "../../components/Portfolio/PortfolioList/PortfolioList";
 import CardList from "../../components/CardList/CardList";
-import { portfolioGetService } from "../../Services/PortfolioService";
+import { portfolioGetService, portfolioPostService } from "../../Services/PortfolioService";
 import { portfolioGet } from "../../Models/PortfolioModel";
 
 type Props = {};
@@ -36,15 +36,16 @@ const SearchPage = (props: Props) => {
       setServerError(result);
     } else if (Array.isArray(result.data)) {
       setSearchResult(result.data);
-    }
-    console.log(searchResult);
+      console.log(result?.data);
+    }   
   };
 
-  const onAddProtfolioSubmit = (e: any) => {
+  const onAddProtfolioSubmit =async (e: any) => {
     e.preventDefault();
     const exist = portfolios?.find((value) => value.symbol === e.target[0].value);
     if (exist) return;
-    //setPortfolios([...portfolios?, e.target[0].value]);
+    await portfolioPostService(e.target[0].value)
+    fetchPortfolio();
   };
 
   const onDeletePortfolio = (e: any) => {
@@ -60,7 +61,7 @@ const SearchPage = (props: Props) => {
       />
       {serverError && <div>Unable to Connect API</div>}
       <PortfolioList
-        portfolios={portfolios}
+        portfolios={portfolios!}
         onDeletePortfolio={onDeletePortfolio}
       />
       <CardList

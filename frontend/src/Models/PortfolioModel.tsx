@@ -9,3 +9,7 @@ export type portfolioGet={
     comments:any;
     portfolios:any;
 }
+
+export type portfolioPost={
+    symbol:string;
+}

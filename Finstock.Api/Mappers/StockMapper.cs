@@ -40,7 +40,7 @@ namespace Finstock.Api.Mappers
                 Symbol = stockModel.symbol,
                 ComponyName = stockModel.companyName,
                 Purchase = (decimal)stockModel.price,
-                LastDiv = stockModel.lastDiv,
+                LastDiv = (int)stockModel.lastDiv,
                 Industry = stockModel.industry,
                 MarketCap = (int)stockModel.mktCap
             };

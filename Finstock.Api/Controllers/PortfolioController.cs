@@ -50,15 +50,13 @@ namespace Finstock.Api.Controllers
                 stock = await _fMPService.GetStockFromFMP(symbol);
                 if(stock != null)
                 {
-                    _stockRepository.CreateStokcAsync(stock);
+                    await _stockRepository.CreateStokcAsync(stock);
                 }
                 else
                 {
                     return BadRequest("Stock Not Found !");
                 }
             }
-
-            if (stock == null) return BadRequest("Stock not found !");
 
             var userPortfolio =await _portfolioRepository.GetUserPortfolio(appUser);
 

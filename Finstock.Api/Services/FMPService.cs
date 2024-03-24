@@ -25,6 +25,8 @@ namespace Finstock.Api.Services
                 if (result.IsSuccessStatusCode)
                 {
                     var content = await result.Content.ReadAsStringAsync();
+                    Console.BackgroundColor = ConsoleColor.Green;
+                    Console.WriteLine(content);
                     var stocks = JsonSerializer.Deserialize<FMPStock[]>(content);
                     var stock = stocks[0];
                     if (stock != null)
@@ -36,7 +38,8 @@ namespace Finstock.Api.Services
                 return null ;
             }catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.BackgroundColor = ConsoleColor.Red;
+                Console.WriteLine("ERROR"+ex.Message);
                 return null;
             }
         }
