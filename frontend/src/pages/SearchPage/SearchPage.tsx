@@ -4,7 +4,7 @@ import { SearchCompony } from "../../api";
 import SearchBox from "../../components/Search/SearchBox";
 import PortfolioList from "../../components/Portfolio/PortfolioList/PortfolioList";
 import CardList from "../../components/CardList/CardList";
-import { portfolioGetService, portfolioPostService } from "../../Services/PortfolioService";
+import { portfolioDeleteService, portfolioGetService, portfolioPostService } from "../../Services/PortfolioService";
 import { portfolioGet } from "../../Models/PortfolioModel";
 
 type Props = {};
@@ -48,9 +48,10 @@ const SearchPage = (props: Props) => {
     fetchPortfolio();
   };
 
-  const onDeletePortfolio = (e: any) => {
+  const onDeletePortfolio =async (e: any) => {
     e.preventDefault();
-    
+    console.log(e.target[0].value);
+    await portfolioDeleteService(e.target[0].value).then(()=>fetchPortfolio())
   };
   return (
     <>

@@ -7,7 +7,7 @@
         public double? beta { get; set; }
         public int? volAvg { get; set; }
         public long? mktCap { get; set; }
-        public int? lastDiv { get; set; }
+        public float? lastDiv { get; set; }
         public string? range { get; set; } = string.Empty;
         public double? changes { get; set; }
         public string? companyName { get; set; } = string.Empty;
@@ -21,7 +21,7 @@
         public string? website { get; set; } = string.Empty;
         public string? description { get; set; } = string.Empty;     
         public string? ceo { get; set; } = string.Empty;
-        public string?   sector { get; set; } = string.Empty;
+        public string?  sector { get; set; } = string.Empty;
         public string? country { get; set; } = string.Empty;
         public string? fullTimeEmployees { get; set; } = string.Empty;
         public string? phone { get; set; } = string.Empty;

@@ -27,6 +27,11 @@ namespace Finstock.Api.Services
                     var content = await result.Content.ReadAsStringAsync();
                     Console.BackgroundColor = ConsoleColor.Green;
                     Console.WriteLine(content);
+                    var option = new JsonSerializerOptions
+                    {
+                        IgnoreNullValues = true,
+                        PropertyNameCaseInsensitive = true,
+                    };
                     var stocks = JsonSerializer.Deserialize<FMPStock[]>(content);
                     var stock = stocks[0];
                     if (stock != null)

@@ -16,8 +16,16 @@ export const portfolioGetService= async()=>{
 export const portfolioPostService= async (symbol:string)=>{
     try{
         const value=await axios.post<portfolioPost>(api+`?symbol=${symbol}`);
-        console.log(value);
         return value;
+    }catch(e){
+        handleError(e)
+    }
+}
+
+export const portfolioDeleteService=async(symbol:string)=>{
+    try{
+        const result=await axios.delete(api+`?symbol=${symbol}`);
+        return result;
     }catch(e){
         handleError(e)
     }
