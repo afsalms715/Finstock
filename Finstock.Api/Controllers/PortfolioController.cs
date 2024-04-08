@@ -86,7 +86,7 @@ namespace Finstock.Api.Controllers
             var filterPortfolio=userPortfolio.Where(x=>x.Symbol.ToLower() == symbol.ToLower());
             if(filterPortfolio.Count()==1)
             {
-                _portfolioRepository.DeletePortfolio(appUser, symbol);
+                await _portfolioRepository.DeletePortfolio(appUser, symbol);
             }
             else
             {

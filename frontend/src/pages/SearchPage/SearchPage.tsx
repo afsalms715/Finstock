@@ -51,7 +51,7 @@ const SearchPage = (props: Props) => {
   const onDeletePortfolio =async (e: any) => {
     e.preventDefault();
     console.log(e.target[0].value);
-    await portfolioDeleteService(e.target[0].value).then(()=>fetchPortfolio())
+    await portfolioDeleteService(e.target[0].value).then(()=>fetchPortfolio().then(()=>console.log("fetch after delete")))
   };
   return (
     <>
